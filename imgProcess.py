@@ -1,7 +1,7 @@
 import PIL
 from PIL import Image
 import os
-import sys
+import glob
 
 
 def convertGrey(img):
@@ -15,15 +15,25 @@ def convertGrey(img):
             blue = inPixel[2]
             grey = (red + green + blue) // 3
             result.putpixel((i, j), (grey, grey, grey))
-
     result.show()
 
+
 def thmubnails():
-    pass
+    try:
+        img = Image.open('anna.jpg')
+        img.thumbnail((200, 200))
+        img.save(r'C:\Users\User\PycharmProjects\home work 4/AnnaThumbnail.jpg')
+        newImage = Image.open(r'C:\Users\User\PycharmProjects\home work 4/AnnaThumbnail.jpg')
+        newImage.show()
+    except IOError:
+        pass
+
 
 def histogram():
     pass
 
+
 annaImage = r'C:\Users\User\PycharmProjects\home work 4\anna.jpg'
 im = Image.open(annaImage)
 convertGrey(im)
+thmubnails()
