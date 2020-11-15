@@ -1,7 +1,5 @@
-import PIL
 from PIL import Image
 import os
-import glob
 
 
 def convertGrey(img):
@@ -18,15 +16,20 @@ def convertGrey(img):
     result.show()
 
 
-def thmubnails():
-    try:
-        img = Image.open('anna.jpg')
-        img.thumbnail((200, 200))
-        img.save(r'C:\Users\User\PycharmProjects\home work 4/AnnaThumbnail.jpg')
-        newImage = Image.open(r'C:\Users\User\PycharmProjects\home work 4/AnnaThumbnail.jpg')
-        newImage.show()
-    except IOError:
-        pass
+def thumbnails():
+    path = r"C:\Users\User\PycharmProjects\home work 4/"
+    for infile in os.listdir(path):
+        if os.path.isfile(path + infile):
+            try:
+                if not infile.endswith((".png", "jpg", "jpeg")):
+                    continue
+            except:
+                pass
+
+            img = Image.open(path + infile)
+            file, ext = os.path.splitext(path + infile)
+            img.thumbnail((200, 200))
+            img.save(file + ' thumbnail.jpg', 'JPEG')
 
 
 def histogram():
@@ -36,4 +39,4 @@ def histogram():
 annaImage = r'C:\Users\User\PycharmProjects\home work 4\anna.jpg'
 im = Image.open(annaImage)
 convertGrey(im)
-thmubnails()
+thumbnails()
