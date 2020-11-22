@@ -8,6 +8,7 @@ def convertGrey(img):
     path = Image.open(img)
     size = path.size
     result = Image.new('RGB', size)
+
     for i in range(size[0]):
         for j in range(size[1]):
             inPixel = path.getpixel((i, j))
@@ -19,16 +20,14 @@ def convertGrey(img):
     result.show()
 
 
-def thumbnails(image):
-    path = image
+def thumbnails(path):
+    path = path
     for infile in os.listdir(path):
         if os.path.isfile(path + infile):
 
             try:
-
                 if not infile.endswith((".png", "jpg", "jpeg")):
                     continue
-
             except:
                 pass
 
@@ -42,16 +41,22 @@ def imageHistogram(image):
     path = cv.imread(image, 0)
     h = path.shape[0]
     w = path.shape[1]
-    hist = np.zeros([256], np.int32)
+    hist = np.zeros([256], np.int)
     for i in range(0, h):
         for n in range(0, w):
             hist[path[i, n]] += 1
-    for j in range(len(hist[::11])):
-        return hist[j]
+    lst = []
+    count = 0
+    for j in range(1, 257):
+        count += hist[j - 1]
+        if j % 26 == 0:
+            lst.append(count)
+            count = 0
+    lst.append(count)
+    print(lst)
 
 
-annaImage = r'C:\Users\User\PycharmProjects\home work 4\anna.jpg'
-imageHistogram(annaImage)
-# convertGrey(im)
-# thumbnails(r"C:\Users\User\PycharmProjects\home work 4/")
-# histgram(im)
+elsaImage = r'C:\Users\User\PycharmProjects\home work 4\elsa.jpg'
+imageHistogram(elsaImage)
+# convertGrey(annaImage)
+# thumbnails(r'C:\Users\User\PycharmProjects\home work 4/')
