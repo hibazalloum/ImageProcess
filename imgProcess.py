@@ -1,13 +1,16 @@
 from PIL import Image
 import os
+import numpy as np
+import cv2 as cv
 
 
 def convertGrey(img):
-    size = img.size
+    path = Image.open(img)
+    size = path.size
     result = Image.new('RGB', size)
     for i in range(size[0]):
         for j in range(size[1]):
-            inPixel = img.getpixel((i, j))
+            inPixel = path.getpixel((i, j))
             red = inPixel[0]
             green = inPixel[1]
             blue = inPixel[2]
@@ -16,13 +19,16 @@ def convertGrey(img):
     result.show()
 
 
-def thumbnails():
-    path = r"C:\Users\User\PycharmProjects\home work 4/"
+def thumbnails(image):
+    path = image
     for infile in os.listdir(path):
         if os.path.isfile(path + infile):
+
             try:
+
                 if not infile.endswith((".png", "jpg", "jpeg")):
                     continue
+
             except:
                 pass
 
@@ -32,11 +38,20 @@ def thumbnails():
             img.save(file + ' thumbnail.jpg', 'JPEG')
 
 
-def histogram():
-    pass
+def imageHistogram(image):
+    path = cv.imread(image, 0)
+    h = path.shape[0]
+    w = path.shape[1]
+    hist = np.zeros([256], np.int32)
+    for i in range(0, h):
+        for n in range(0, w):
+            hist[path[i, n]] += 1
+    for j in range(len(hist[::11])):
+        return hist[j]
 
 
 annaImage = r'C:\Users\User\PycharmProjects\home work 4\anna.jpg'
-im = Image.open(annaImage)
-convertGrey(im)
-thumbnails()
+imageHistogram(annaImage)
+# convertGrey(im)
+# thumbnails(r"C:\Users\User\PycharmProjects\home work 4/")
+# histgram(im)
